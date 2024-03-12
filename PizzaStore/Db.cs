@@ -1,45 +1,51 @@
-namespace PizzaStore.DB; 
+namespace PizzaStore.DB;
 
 public record Pizza
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }
 
-public class PizzaDb
+public class PizzaDB
 {
-    private static list<Pizza> _pizza = new list<Pizza>()
+    private static List<Pizza> _pizzas = new List<Pizza>()
+   {
+     new Pizza{ Id=1, Name="Montemagno, Pizza shaped like a great mountain" },
+     new Pizza{ Id=2, Name="The Galloway, Pizza shaped like a submarine, silent but deadly"},
+     new Pizza{ Id=3, Name="The Noring, Pizza shaped like a Viking helmet, where's the mead"}
+   };
+
+    public static List<Pizza> GetPizzas()
     {
-        new Pizza() { Id = 1, Name= "The Pepperoni Parade, Pizza loaded with Pepperoni "},
-        new Pizza() { Id = 2, Name= "Buffalo Chicken Blaze, Blazin hot pizza "},
-        new Pizza() { Id = 3, Name= "Montemagno, Pizza shaped like a great mountain"}
-    };
-    
-public static List(Pizza) GetPizza()
-    {
-        return _pizza; 
+        return _pizzas;
     }
 
-public static Pizza ? GetPizza(int id)
+    public static Pizza? GetPizza(int id)
     {
-        return _pizzas.SingleOrDefault(pizza => pizza.id == id); 
+        return _pizzas.SingleOrDefault(pizza => pizza.Id == id);
     }
 
-public static Pizza CreatePizza(pizza pizza)
-    { 
-        _pizza.Add(pizza);
-        return new pizza; 
-    }
-
-public static UpdatePizza(Pizza update)
+    public static Pizza CreatePizza(Pizza pizza)
     {
-
+        _pizzas.Add(pizza);
+        return pizza;
     }
 
+    public static Pizza UpdatePizza(Pizza update)
+    {
+        _pizzas = _pizzas.Select(pizza =>
+        {
+            if (pizza.Id == update.Id)
+            {
+                pizza.Name = update.Name;
+            }
+            return pizza;
+        }).ToList();
+        return update;
+    }
 
-
-
-
-
-
+    public static void RemovePizza(int id)
+    {
+        _pizzas = _pizzas.FindAll(pizza => pizza.Id != id).ToList();
+    }
 }
