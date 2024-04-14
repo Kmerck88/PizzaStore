@@ -1,3 +1,5 @@
+﻿using Microsoft.EntityFrameworkCore;
+
 namespace PizzaStore.DB;
 
 public record Pizza
@@ -12,7 +14,7 @@ public class PizzaDB
    {
      new Pizza{ Id=1, Name="Montemagno, Pizza shaped like a great mountain" },
      new Pizza{ Id=2, Name="The Galloway, Pizza shaped like a submarine, silent but deadly"},
-     new Pizza{ Id=3, Name="The Noring, Pizza shaped like a Viking helmet, where's the mead"}
+     new Pizza{ Id=3, Name="The Boring, Pizza shaped like a Viking helmet, where's the mead"}
    };
 
     public static List<Pizza> GetPizzas()
